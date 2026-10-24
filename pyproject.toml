@@ -1,0 +1,43 @@
+[project]
+name = "s3-migration-tools"
+version = "0.1.0"
+description = "Migration de données entre deux stockages S3 compatibles (AWS, Scaleway, OVH, Cellar Clever Cloud…)"
+readme = "README.md"
+authors = [
+    { name = "mandresyandri", email = "mandresy.andriantsoanavalona@gmail.com" }
+]
+requires-python = ">=3.12"
+dependencies = [
+    "boto3>=1.43.118",
+    "python-dotenv>=1.2.4",
+    "rich>=15.0.0",
+    "typer>=0.27.3",
+]
+
+[project.scripts]
+s3-migration-tools = "s3_migration_tools:main"
+
+[build-system]
+requires = ["uv_build>=0.9.7,<0.10.0"]
+build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "moto[s3]>=5.2.4",
+    "pre-commit>=4.7.0",
+    "pytest>=9.1.1",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff.lint.flake8-bugbear]
+# typer déclare ses options comme valeurs par défaut des paramètres
+extend-immutable-calls = ["typer.Option", "typer.Argument"]
